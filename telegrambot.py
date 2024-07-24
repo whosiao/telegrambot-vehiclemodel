@@ -1,4 +1,4 @@
-import boto3
+# import boto3
 import logging
 from telegram import Update
 from telegram.ext import filters, ApplicationBuilder, ContextTypes, CommandHandler, MessageHandler
@@ -10,14 +10,14 @@ import base64
 import time
 import requests
 
-AWS_ACCESS_KEY_ID = 'AKIA4MTWMCB4NKR5MQ4U'
-AWS_SECRET_ACCESS_KEY = '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'
-S3_BUCKET_NAME = 'jerrysingaporebucket'
+AWS_ACCESS_KEY_ID = ''
+AWS_SECRET_ACCESS_KEY = ''
+S3_BUCKET_NAME = ''
 
-telegram_token = '6756202408:AAG52C8GVUHSBE2xMQiwbXsbJdlb6Go58DQ'
+telegram_token = ''
 apiURL = f'https://api.telegram.org/bot{telegram_token}/sendMessage'
 
-CHROME_PATH = "C:/Users/HanJie/AppData/Local/Google/Chrome/User Data"
+CHROME_PATH = "C:/Users/Administrator/AppData/Local/Google/Chrome/User Data"
 
 
 class OneMotoring():
@@ -156,46 +156,46 @@ async def check_model(update: Update, context: ContextTypes.DEFAULT_TYPE):
     print("check model ended")
 
 
-async def downloader(update, context):
-    logging.info(update.message)
+# async def downloader(update, context):
+#     logging.info(update.message)
+#
+#     file_id = update.message.photo[-1]
+#     new_file = await context.bot.get_file(file_id)
+#
+#     with io.BytesIO() as out:
+#         await new_file.download_to_memory(out)
+#         photo_data = out.getvalue()
+#
+#     # Initialize S3 client
+#     s3 = boto3.client('s3', aws_access_key_id=AWS_ACCESS_KEY_ID, aws_secret_access_key=AWS_SECRET_ACCESS_KEY)
+#
+#     # Upload to S3
+#     s3_key = "fileName.jpg"  # Adjust as needed
+#     s3.upload_fileobj(io.BytesIO(photo_data), S3_BUCKET_NAME, s3_key)
+#
+#     # Acknowledge file received
+#     await update.message.reply_text("{fileName} saved successfully to S3")
 
-    file_id = update.message.photo[-1]
-    new_file = await context.bot.get_file(file_id)
 
-    with io.BytesIO() as out:
-        await new_file.download_to_memory(out)
-        photo_data = out.getvalue()
-
-    # Initialize S3 client
-    s3 = boto3.client('s3', aws_access_key_id=AWS_ACCESS_KEY_ID, aws_secret_access_key=AWS_SECRET_ACCESS_KEY)
-
-    # Upload to S3
-    s3_key = "fileName.jpg"  # Adjust as needed
-    s3.upload_fileobj(io.BytesIO(photo_data), S3_BUCKET_NAME, s3_key)
-
-    # Acknowledge file received
-    await update.message.reply_text("{fileName} saved successfully to S3")
-
-
-async def downloader_bytes(update, context):
-    logging.info(update.message)
-
-    file_id = update.message.photo[-1]
-    new_file = await context.bot.get_file(file_id)
-
-    image_bytes = await new_file.download_as_bytearray()
-
-    # Send to SQS
-    sqs = boto3.client('sqs',
-                       region_name='ap-southeast-1',
-                       aws_access_key_id=AWS_ACCESS_KEY_ID, aws_secret_access_key=AWS_SECRET_ACCESS_KEY)
-    response = sqs.send_message(
-        QueueUrl='https://sqs.ap-southeast-1.amazonaws.com/851725521016/queue_for_image_bytes',
-        MessageBody=base64.b64encode(image_bytes).decode('utf-8')
-    )
-
-    print(response)
-    print("successfully sent to sqs")
+# async def downloader_bytes(update, context):
+#     logging.info(update.message)
+#
+#     file_id = update.message.photo[-1]
+#     new_file = await context.bot.get_file(file_id)
+#
+#     image_bytes = await new_file.download_as_bytearray()
+#
+#     # Send to SQS
+#     sqs = boto3.client('sqs',
+#                        region_name='ap-southeast-1',
+#                        aws_access_key_id=AWS_ACCESS_KEY_ID, aws_secret_access_key=AWS_SECRET_ACCESS_KEY)
+#     response = sqs.send_message(
+#         QueueUrl='',
+#         MessageBody=base64.b64encode(image_bytes).decode('utf-8')
+#     )
+#
+#     print(response)
+#     print("successfully sent to sqs")
 
 
 logging.basicConfig(
