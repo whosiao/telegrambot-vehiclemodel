@@ -20,6 +20,8 @@ apiURL = f'https://api.telegram.org/bot{telegram_token}/sendMessage'
 CHROME_PATH = "C:/Users/Administrator/AppData/Local/Google/Chrome/User Data"
 
 
+hello
+
 class OneMotoring():
     def __init__(self):
         # print("just init")
